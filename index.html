@@ -60,7 +60,7 @@
 			// Invoke event create 
 			// (<event msg>, <callback function>, <format>)
 			Boxever.eventCreate(searchEvent, function(data){alert(JSON.stringify(data));}, 'json');
-			alert(window._boxever_settings.pointOfSale);
+			//alert(window._boxever_settings.pointOfSale);
 			});
 		}
 		
@@ -70,6 +70,7 @@
 				"type": eventType,
 				"pos": window._boxever_settings.pointOfSale,
 				"browser_id": Boxever.getID(),
+				"page": "test-arvind",
 				"product_name": "DUB-IND",
 				"product_type": "DUB-IND|Economy|Flex"				//"interactionID":"OOB_EXP",
 				//"interactionName": "EMAIL_BAR_DELAY"
@@ -82,15 +83,15 @@
 		    var xmlHttp = new XMLHttpRequest();
 			
 			var searchEvent = {
-				"browser_id": Boxever.getID(),
 				"channel": "WEB",
 				"type": "SEARCH",
-				"language": "EN",
-				"currency": "AED",
-				"page": "/test-arvind",
 				"pos": window._boxever_settings.pointOfSale,
+				"browser_id": Boxever.getID(),
+				//"language": "EN",
+				//"currency": "AED",
+				"page": "test-arvind",
 				"product_name": "DUB-IND",
-				"product_type": "XmlHttp|DUB-IND|Economy|Flex"
+				"product_type": "Http|DUB-IND|Economy|Flex"
 			};
 			
 			var theUrl = 'https://api.boxever.com/v1.3/event/create.json?client_key=psfu6uh05hsr9c34rptlr06dn864cqrx&message=' + JSON.stringify(searchEvent)
@@ -138,6 +139,7 @@
 				"nationality": "Human",
 				"firstName": name,
 				"email": email,
+				"gender": "Male",
 			};
 			Boxever.eventCreate(eventToSend, function (data) { }, 'json');
 			alert("Identified guest as :" + name + "\n with Email : " + email);
@@ -162,13 +164,14 @@
 					"firstName": fName,
 					"lastName": lName,
 					"email": email,
+					"gender": "Male",
 					<!-- "identifiers": [{ -->
 						<!-- "provider": "HTZL-Email", -->
 						<!-- "id": "arv1@geh1.com" -->
 					<!-- }]				 -->
 				};
 				Boxever.eventCreate(eventToSend, function (data) { }, 'json');
-				alert("Thanks :" + name + "\n Confirmation will be sent to " + email);
+				alert("Thanks :" + fName + " " + lName + "\n Confirmation will be sent to " + email);
 				return false;
 			}
 		}
@@ -186,6 +189,23 @@
 			   }
 			};
 			Boxever.eventCreate(eventToSend, function (data) {alert(JSON.stringify(data)); }, 'json');
+		}
+		function triggerExperience(friendlyId)
+		{
+			//xContent.style.display = "flex";
+			var flowData = {
+				  "clientKey": window._boxever_settings.client_key,
+				  "channel": "WEB",
+				  "language": "en",
+				  "currencyCode": "EUR",
+				  "pointOfSale": window._boxever_settings.pointOfSale,
+				  "browserId": Boxever.getID(),
+				  "friendlyId": friendlyId
+			}
+			Boxever.callFlows(flowData, function(response) {
+				//alert('Congrations!!! \n you got ' + JSON.stringify(response));
+				alert('Congrations!!! \n you got ' + JSON.stringify(response.decisionOffers[0].name));
+			});		
 		}		
 		function triggerInteractive()
 		{
@@ -199,6 +219,7 @@
 				  "friendlyId": "interactiveexparvind"
 			}
 			Boxever.callFlows(flowData, function(response) {
+				//alert('Congrations!!! \n you got ' + JSON.stringify(response));
 				alert('Congrations!!! \n you got ' + JSON.stringify(response.decisionOffers[0].name));
 			});		
 		}
@@ -534,7 +555,7 @@
                              <div class="pricing-bottom">
                                    <!-- <span class="pricing-dollar">$200/mo</span> -->
                                    <!-- <a href="#" class="section-btn pricing-btn">Register now</a> -->
-								   <button onclick="" class="section-btn">Trigger Web</button>
+								   <button onclick="triggerExperience('testweb_arvind');" class="section-btn">Trigger Web</button>
                              </div>
                          </div>
                     </div>
@@ -574,7 +595,7 @@
                              <div class="pricing-bottom">
                                    <!-- <span class="pricing-dollar">$550/mo</span> -->
                                    <!-- <a href="#" class="section-btn pricing-btn">Register now</a> -->
-								   <button onclick="" class="section-btn">Trigger Triggered</button>
+								   <button onclick="alert('Make sure that you have triggered SEARCH event. \nTriggered Expereinces will automatcally triggered.')" class="section-btn">Trigger Triggered</button>
                              </div>
                          </div>
                     </div>
