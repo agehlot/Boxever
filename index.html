@@ -474,7 +474,8 @@
         });
 
         function sendDefaultIdentity() {
-            var name = "Arvind";
+            var fName = "Arvind";
+            var lName = "Gehlot";
             var email = "arv1@geh1.com";
 
             var eventToSend = {
@@ -483,12 +484,13 @@
                 "pos": window._boxever_settings.pointOfSale,
                 "browser_id": Boxever.getID(),
                 "nationality": "Human",
-                "firstName": name,
+                "firstName": fName,
+                "lastName": lName,
                 "email": email,
                 "gender": "Male",
             };
             Boxever.eventCreate(eventToSend, function (data) { }, 'json');
-            alert("Identified guest as :" + name + "\n with Email : " + email);
+            alert("Identified guest as :" + fName + "\n with Email : " + email);
         }
 
         //Get Guest Id
